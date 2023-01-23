@@ -8,11 +8,11 @@
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useRef } from "react";
-import * as THREE from "three"
+import { Vector3 } from "three";
 import nipplejs, {JoystickManagerOptions} from "nipplejs";
 
-const tempVector = new THREE.Vector3();
-const upVector = new THREE.Vector3(0, 1, 0);
+const tempVector = new Vector3();
+const upVector = new Vector3(0, 1, 0);
 let fwdValue = 0;
 let bkdValue = 0;
 let rgtValue = 0;
