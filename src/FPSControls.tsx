@@ -16,7 +16,7 @@ let bkdValue = 0;
 let rgtValue = 0;
 let lftValue = 0;
 let joyManager: any;
-const tempVector = new Vector3();
+const tempVector = new Vector3(0, 1, 0); // todo might not be right, but errors here
 const upVector = new Vector3(0, 1, 0);
 
 const NIPPLEJS_OPTIONS = {
