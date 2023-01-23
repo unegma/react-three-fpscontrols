@@ -10,7 +10,11 @@
   "scripts": {
     "rollup": "rollup -c",
     "ci": "npm run rollup",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "pub-major": "npm run rollup && npm version major --force && npm publish --access public && git push --tags",
+    "pub-minor": "npm run rollup && npm version minor --force && npm publish --access public && git push --tags",
+    "pub-patch": "npm run rollup && npm version patch --force && npm publish --access public && git push --tags",
+    "unpublish-single-version": "npm unpublish <package-name>@<version>"
   },
   "repository": {
     "type": "git",
