@@ -2,19 +2,19 @@
   "name": "@unegma/react-three-fpscontrols",
   "version": "1.0.0",
   "description": "React Three Fiber FPS Controls for mobile and desktop",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "rollup": "rollup -c",
-    "ci": "npm run rollup",
     "test": "echo \"Error: no test specified\" && exit 0",
     "pub-major": "npm run rollup && npm version major --force && npm publish --access public && git push --tags",
     "pub-minor": "npm run rollup && npm version minor --force && npm publish --access public && git push --tags",
     "pub-patch": "npm run rollup && npm version patch --force && npm publish --access public && git push --tags",
-    "unpublish-single-version": "npm unpublish <package-name>@<version>"
+    "unpublish-single-version": "npm unpublish <package-name>@<version>",
+    "update-install": "npm update && npm install;",
+    "build": "rm -rf ./dist && npx tsc"
   },
   "repository": {
     "type": "git",
@@ -35,12 +35,7 @@
     "three": "^0.148.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.5",
-    "@babel/preset-env": "^7.16.7",
-    "@babel/preset-react": "^7.16.7",
-    "@rollup/plugin-babel": "^5.3.1",
-    "@rollup/plugin-commonjs": "21.0.2",
-    "@rollup/plugin-node-resolve": "13.1.3",
-    "rollup": "^2.60.0"
+    "@types/node": "^18.11.18",
+    "typescript": "^4.9.4"
   }
 }

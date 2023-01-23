@@ -9,13 +9,13 @@ import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useRef } from "react";
 import { Vector3 } from "three";
-import nipplejs from "nipplejs";
+import nipplejs, {JoystickManagerOptions} from "nipplejs";
 
 let fwdValue = 0;
 let bkdValue = 0;
 let rgtValue = 0;
 let lftValue = 0;
-let joyManager;
+let joyManager: any;
 const tempVector = new Vector3();
 const upVector = new Vector3(0, 1, 0);
 
@@ -29,9 +29,9 @@ const NIPPLEJS_OPTIONS = {
   shape: "circle",
   position: { top: "60px", left: "60px" },
   dynamicPage: true,
-};
+} as JoystickManagerOptions;
 
-const handleMove = (evt, data) => {
+const handleMove = (evt: any, data: any) => {
   const forward = data.vector.y;
   const turn = data.vector.x;
 
@@ -52,8 +52,8 @@ const handleMove = (evt, data) => {
   }
 };
 
-function useKeyboard({ enableKeyboard }) {
-  const onKeyDown = (event) => {
+function useKeyboard({ enableKeyboard }: any) {
+  const onKeyDown = (event: any) => {
     switch (event.code) {
       case "ArrowUp":
       case "KeyW":
@@ -79,7 +79,7 @@ function useKeyboard({ enableKeyboard }) {
     }
   };
 
-  const onKeyUp = (event) => {
+  const onKeyUp = (event: any) => {
     switch (event.code) {
       case "ArrowUp":
       case "KeyW":
@@ -118,7 +118,7 @@ function useKeyboard({ enableKeyboard }) {
   }, [enableKeyboard]);
 }
 
-function useJoystick({ enableJoystick }) {
+function useJoystick({ enableJoystick }: any) {
   const handleEnd = () => {
     bkdValue = 0;
     fwdValue = 0;
@@ -148,10 +148,10 @@ const FPSControls = ({
   orbitProps = {},
   camProps = {},
   mult = 0.1,
-}) => {
-  const orbitRef = useRef();
-  const camRef = useRef();
-  const meshRef = useRef();
+}: any) => {
+  const orbitRef = useRef(null!);
+  const camRef = useRef(null!);
+  const meshRef = useRef(null!);
 
   const updatePlayer = useCallback(() => {
     const mesh = meshRef.current;
@@ -159,33 +159,42 @@ const FPSControls = ({
     const camera = camRef.current;
 
     // move the player
+    // @ts-ignore
     const angle = controls.getAzimuthalAngle();
 
     if (fwdValue > 0) {
       tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
+      // @ts-ignore
       mesh.position.addScaledVector(tempVector, mult);
     }
 
     if (bkdValue > 0) {
       tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
+      // @ts-ignore
       mesh.position.addScaledVector(tempVector, mult);
     }
 
     if (lftValue > 0) {
       tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
+      // @ts-ignore
       mesh.position.addScaledVector(tempVector, mult);
     }
 
     if (rgtValue > 0) {
       tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
+      // @ts-ignore
       mesh.position.addScaledVector(tempVector, mult);
     }
 
+    // @ts-ignore
     mesh.updateMatrixWorld();
 
     // reposition camera
+    // @ts-ignore
     camera.position.sub(controls.target);
+    // @ts-ignore
     controls.target.copy(mesh.position);
+    // @ts-ignore
     camera.position.add(mesh.position);
   }, [meshRef, orbitRef, camRef, mult]);
 
