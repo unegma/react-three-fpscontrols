@@ -147,6 +147,9 @@ const FPSControls = ({
   camProps = {},
   mult = 0.1,
 }: any) => {
+  console.log(new Vector3)
+
+
   const tempVector = new Vector3(0, 1, 0); // todo might not be right, but errors here
   const upVector = new Vector3(0, 1, 0);
 
