@@ -11,6 +11,8 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { Vector3 } from "three";
 import nipplejs, {JoystickManagerOptions} from "nipplejs";
 
+const tempVector = new Vector3();
+const upVector = new Vector3(0, 1, 0);
 let fwdValue = 0;
 let bkdValue = 0;
 let rgtValue = 0;
@@ -147,12 +149,6 @@ const FPSControls = ({
   camProps = {},
   mult = 0.1,
 }: any) => {
-  console.log(Vector3)
-
-
-  const tempVector = new Vector3(0, 1, 0); // todo might not be right, but errors here
-  const upVector = new Vector3(0, 1, 0);
-
   const orbitRef = useRef(null!);
   const camRef = useRef(null!);
   const meshRef = useRef(null!);
