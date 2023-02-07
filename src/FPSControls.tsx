@@ -10,7 +10,7 @@ import { useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useRef } from "react";
 import * as THREE from "three";
 import nipplejs, {JoystickManagerOptions} from "nipplejs";
-
+console.log(THREE)
 const tempVector = new THREE.Vector3();
 const upVector = new THREE.Vector3(0, 1, 0);
 let fwdValue = 0;
