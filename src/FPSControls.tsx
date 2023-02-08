@@ -10,7 +10,6 @@ import { useFrame } from "@react-three/fiber";
 import React, { useCallback, useEffect, useRef } from "react";
 import * as THREE from "three";
 import nipplejs, {JoystickManagerOptions} from "nipplejs";
-console.log(THREE)
 const tempVector = new THREE.Vector3();
 const upVector = new THREE.Vector3(0, 1, 0);
 let fwdValue = 0;
@@ -154,48 +153,51 @@ const FPSControls = ({
   const meshRef = useRef(null!);
 
   const updatePlayer = useCallback(() => {
-    const mesh = meshRef.current;
-    const controls = orbitRef.current;
-    const camera = camRef.current;
 
-    // move the player
-    // @ts-ignore
-    const angle = controls.getAzimuthalAngle();
+    if (camRef) { // camRef seems to be undefined
+      const mesh = meshRef.current;
+      const controls = orbitRef.current;
+      const camera = camRef.current;
 
-    if (fwdValue > 0) {
-      tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
+      // move the player
       // @ts-ignore
-      mesh.position.addScaledVector(tempVector, mult);
-    }
+      const angle = controls.getAzimuthalAngle();
 
-    if (bkdValue > 0) {
-      tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
+      if (fwdValue > 0) {
+        tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
+        // @ts-ignore
+        mesh.position.addScaledVector(tempVector, mult);
+      }
+
+      if (bkdValue > 0) {
+        tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
+        // @ts-ignore
+        mesh.position.addScaledVector(tempVector, mult);
+      }
+
+      if (lftValue > 0) {
+        tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
+        // @ts-ignore
+        mesh.position.addScaledVector(tempVector, mult);
+      }
+
+      if (rgtValue > 0) {
+        tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
+        // @ts-ignore
+        mesh.position.addScaledVector(tempVector, mult);
+      }
+
       // @ts-ignore
-      mesh.position.addScaledVector(tempVector, mult);
-    }
+      mesh.updateMatrixWorld();
 
-    if (lftValue > 0) {
-      tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
+      // reposition camera
       // @ts-ignore
-      mesh.position.addScaledVector(tempVector, mult);
-    }
-
-    if (rgtValue > 0) {
-      tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
+      camera.position.sub(controls.target);
       // @ts-ignore
-      mesh.position.addScaledVector(tempVector, mult);
+      controls.target.copy(mesh.position);
+      // @ts-ignore
+      camera.position.add(mesh.position);
     }
-
-    // @ts-ignore
-    mesh.updateMatrixWorld();
-
-    // reposition camera
-    // @ts-ignore
-    camera.position.sub(controls.target);
-    // @ts-ignore
-    controls.target.copy(mesh.position);
-    // @ts-ignore
-    camera.position.add(mesh.position);
   }, [meshRef, orbitRef, camRef, mult]);
 
   useFrame(() => {
