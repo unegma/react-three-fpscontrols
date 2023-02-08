@@ -6,7 +6,7 @@ const packageJson = require("./package.json");
 
 export default [
   {
-    input: "src/index.js",
+    input: "dist/index.js",
     output: [
       {
         file: packageJson.main,

@@ -16,7 +16,7 @@
     "unpublish-single-version": "npm unpublish <package-name>@<version>",
     "update-install": "npm update && npm install;",
     "build-tsc": "rm -rf ./dist && npm install && npx tsc",
-    "build": "rm -rf ./dist && npm install && rollup"
+    "build": "rm -rf ./dist && npm install && npx tsc && npm run rollup"
   },
   "repository": {
     "type": "git",
