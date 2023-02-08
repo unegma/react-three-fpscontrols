@@ -153,51 +153,48 @@ const FPSControls = ({
   const meshRef = useRef(null!);
 
   const updatePlayer = useCallback(() => {
+    const mesh = meshRef.current;
+    const controls = orbitRef.current;
+    const camera = camRef.current;
 
-    if (camRef) { // camRef seems to be undefined
-      const mesh = meshRef.current;
-      const controls = orbitRef.current;
-      const camera = camRef.current;
+    // move the player
+    // @ts-ignore
+    const angle = controls.getAzimuthalAngle();
 
-      // move the player
+    if (fwdValue > 0) {
+      tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
       // @ts-ignore
-      const angle = controls.getAzimuthalAngle();
-
-      if (fwdValue > 0) {
-        tempVector.set(0, 0, -fwdValue).applyAxisAngle(upVector, angle);
-        // @ts-ignore
-        mesh.position.addScaledVector(tempVector, mult);
-      }
-
-      if (bkdValue > 0) {
-        tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
-        // @ts-ignore
-        mesh.position.addScaledVector(tempVector, mult);
-      }
-
-      if (lftValue > 0) {
-        tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
-        // @ts-ignore
-        mesh.position.addScaledVector(tempVector, mult);
-      }
-
-      if (rgtValue > 0) {
-        tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
-        // @ts-ignore
-        mesh.position.addScaledVector(tempVector, mult);
-      }
-
-      // @ts-ignore
-      mesh.updateMatrixWorld();
-
-      // reposition camera
-      // @ts-ignore
-      camera.position.sub(controls.target);
-      // @ts-ignore
-      controls.target.copy(mesh.position);
-      // @ts-ignore
-      camera.position.add(mesh.position);
+      mesh.position.addScaledVector(tempVector, mult);
     }
+
+    if (bkdValue > 0) {
+      tempVector.set(0, 0, bkdValue).applyAxisAngle(upVector, angle);
+      // @ts-ignore
+      mesh.position.addScaledVector(tempVector, mult);
+    }
+
+    if (lftValue > 0) {
+      tempVector.set(-lftValue, 0, 0).applyAxisAngle(upVector, angle);
+      // @ts-ignore
+      mesh.position.addScaledVector(tempVector, mult);
+    }
+
+    if (rgtValue > 0) {
+      tempVector.set(rgtValue, 0, 0).applyAxisAngle(upVector, angle);
+      // @ts-ignore
+      mesh.position.addScaledVector(tempVector, mult);
+    }
+
+    // @ts-ignore
+    mesh.updateMatrixWorld();
+
+    // reposition camera
+    // @ts-ignore
+    camera.position.sub(controls.target);
+    // @ts-ignore
+    controls.target.copy(mesh.position);
+    // @ts-ignore
+    camera.position.add(mesh.position);
   }, [meshRef, orbitRef, camRef, mult]);
 
   useFrame(() => {
