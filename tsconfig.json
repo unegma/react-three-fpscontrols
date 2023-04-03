@@ -7,7 +7,7 @@
     "allowJs": true,
     "outDir": "./dist",
     "target": "ES5",
-    "module": "commonjs",
+    "module": "ES6",
     "lib": ["es2017", "es7", "es6", "dom"],
     "strict": true,
     "esModuleInterop": true,
